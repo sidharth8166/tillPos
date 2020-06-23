@@ -1,0 +1,150 @@
+<!-- Begin page -->
+<div id="wrapper">
+
+  <!-- Topbar Start -->
+  <app-header></app-header>
+
+  <!-- ========== Left Sidebar Start ========== -->
+  <app-sidebar></app-sidebar>
+  <!-- Left Sidebar End -->
+
+  <!-- ============================================================== -->
+  <!-- Start Page Content here -->
+  <!-- ============================================================== -->
+
+  <div class="content-page">
+      <div class="content">
+
+          <!-- Start Content-->
+          <div class="container-fluid">
+              
+              <!-- start page title -->
+              <div class="row">
+                  <div class="col-12">
+                      <div class="page-title-box">
+                          <div class="page-title-right">
+                              <ol class="breadcrumb m-0">
+                                  <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                                  <li class="breadcrumb-item active">Add Instructor</li>
+                              </ol>
+                          </div>
+                          <h4 class="page-title">Add Instructor</h4>
+                      </div>
+                  </div>
+              </div>     
+              <!-- end page title -->     
+
+              <!-- Form row -->
+              <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form #addFm="ngForm" (ngSubmit)="onSubmit(addFm)" method="POST" [formGroup]="addMemberForm" enctype="multipart/form-data">
+                                <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <div class="avatar-upload">
+                                                <div class="avatar-edit">
+                                                    <input  type='file' ngModel formControlName="avatar" name="avatar" id="imageUpload" accept=".png, .jpg, .jpeg" (change)="fileEvent($event)" />
+                                                    
+                                                    <label for="imageUpload"></label>
+                                                </div>
+                                                
+                                                <div class="avatar-preview">
+                                                    <div id="imagePreview" style="background-image: url(assets/images/default.png);">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <input type="hidden" ngModel id="imageInput" formControlName="imageInput" class="form-control" name="imageInput" required [ngClass]="{'is-invalid' : submitted && f.imageInput.errors}" />
+                                            <div *ngIf="submitted && f.imageInput.errors" class="invalid-feedback text-center">
+                                                <div *ngIf="f.imageInput.errors.required">Profile pic is required</div>
+                                            </div>
+                                    </div>
+                                    
+                                    <div class="form-group col-md-6">
+                                        <label for="name" class="col-form-label">Name</label>
+                                        <input formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" type="text" name="name"  class="form-control" ngModel id="name" placeholder="Full Name">
+                                        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                                            <div *ngIf="f.name.errors.required">Name is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="age" class="col-form-label">Age</label>
+                                        <input formControlName="age" [ngClass]="{'is-invalid' : submitted && f.age.errors}" type="number" class="form-control" ngModel id="age" placeholder="Age" name="age" required>
+                                        <div *ngIf="submitted && f.age.errors" class="invalid-feedback">
+                                          <div *ngIf="f.age.errors.required">Age is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="email" class="col-form-label">Email</label>
+                                        <input name="email" formControlName="email" [ngClass]="{'is-invalid' : submitted && f.email.errors}" type="email" class="form-control" ngModel id="email" placeholder="Email" required>
+                                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                          <div *ngIf="f.email.errors.required">Email required</div>
+                                          <div *ngIf="f.email.errors.email">Enter valid email id</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="contact" class="col-form-label">Contact Number</label>
+                                        <input name="contact" formControlName="contact" [ngClass]="{'is-invalid' : submitted && f.contact.errors}" type="text" maxlength="10" class="form-control" ngModel id="contact" placeholder="Contact Number" required>
+                                        <div *ngIf="submitted && f.contact.errors" class="invalid-feedback">
+                                          <div *ngIf="f.contact.errors.required">Contact number required</div>
+                                          <div *ngIf="f.contact.errors.pattern">Enter valid contact number</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="address" class="col-form-label">Address</label>
+                                    <input type="text" name="address" class="form-control" ngModel id="address" placeholder="1234 Main St" formControlName="address" [ngClass]="{'is-invalid':submitted && f.address.errors}">
+                                    <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                                      <div *ngIf="f.address.errors.required">Address is required</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="about" class="col-form-label">About</label>
+                                    <textarea id="about" class="form-control" formControlName="about" name="about" [ngClass]="{'is-invalid' : submitted && f.about.errors}" maxlength="225" rows="3" placeholder="This textarea has a limit of 225 chars."></textarea>
+                                    
+                                    <div *ngIf="submitted && f.about.errors" class="invalid-feedback">
+                                        <div *ngIf="f.about.errors.required">Required*</div>
+                                    </div>
+
+                                </div>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light">Add</button>
+
+                            </form>
+                            <br><br>
+                            <div class="alert alert-success" *ngIf="successMsg">
+                                Member is added successfully
+                            </div>
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card-->
+                </div> <!-- end col -->
+            </div>
+            <!-- end row -->
+              <!-- end row -->
+
+              <!-- end row -->
+
+          </div> <!-- container -->
+
+      </div> <!-- content -->
+
+      <!-- Footer Start -->
+      <app-footer></app-footer>
+      <!-- end Footer -->
+
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- End Page content -->
+  <!-- ============================================================== -->
+
+
+</div>
+<!-- END wrapper -->
+
+<!-- Right bar overlay-->
+<div class="rightbar-overlay"></div>

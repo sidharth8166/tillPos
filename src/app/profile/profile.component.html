@@ -1,0 +1,192 @@
+<div id="wrapper">
+  <!-- Topbar Start -->
+  <app-header></app-header>
+
+  <!-- ========== Left Sidebar Start ========== -->
+  <app-sidebar></app-sidebar>
+  <!-- Left Sidebar End -->
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start Content-->
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                
+                                <li class="breadcrumb-item active">{{user.name}}</li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">Instructor Profile</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            <div class="row">
+                <div class="col-lg-4 col-xl-4">
+                    <div class="card-box text-center">
+                        
+                        
+                        <h4 class="mb-0">{{user.name}}</h4>
+                        <!-- <p class="text-muted">{{}}</p> -->
+                        <!-- <button type="button" class="btn btn-success btn-xs waves-effect mb-2 waves-light">Follow</button>
+                        <button type="button" class="btn btn-danger btn-xs waves-effect mb-2 waves-light">Message</button> -->
+
+                        <div class="text-left mt-3">
+                            
+                            <p class="text-muted mb-2 font-13"><strong>Email :</strong> <span class="ml-2">{{user.email}}</span></p>
+
+                            <p class="text-muted mb-2 font-13"><strong>Mobile :</strong><span class="ml-2">{{user.contact}}</span></p>
+
+                        </div>
+  
+                        <!-- change password form -->
+                        <form action="#" #fp="ngForm" [formGroup]="changePassForm" (ngSubmit)="onSubmit(fp)">
+                          <div class="form-group">
+                              <label for="password">Change Password</label>
+                              <input class="form-control" type="password" name="password" id="password" placeholder="Enter your password" formControlName="password" [ngClass]="{ 'is-invalid': submitPass && f.password.errors }" >
+                              <div *ngIf="submitPass && f.password.errors">
+                                <label class="col" [ngClass]="changePassForm.controls['password'].hasError('required') || changePassForm.controls['password'].hasError('minlength')  ? 'text-danger' : 'text-success'">
+                                    <i class="material-icons">{{ changePassForm.controls['password'].hasError('required') ||
+                                      changePassForm.controls['password'].hasError('minlength') ? 'cancel' :
+                                      'check_circle' }}</i>
+                                    Must be at least 8 characters!
+                                  </label>
+                                  
+                                  <label class="col" [ngClass]="changePassForm.controls['password'].hasError('required') || changePassForm.controls['password'].hasError('hasNumber')  ? 'text-danger' : 'text-success'">
+                                    <i class="material-icons">
+                                      {{ changePassForm.controls['password'].hasError('required') || changePassForm.controls['password'].hasError('hasNumber') ? 'cancel' : 'check_circle' }}
+                                    </i> 
+                                    Must contain at least 1 number!
+                                  </label>
+                                  
+                                  <label class="col" [ngClass]="changePassForm.controls['password'].hasError('required') || changePassForm.controls['password'].hasError('hasCapitalCase')  ? 'text-danger' : 'text-success'"> 
+                                    <i class="material-icons">
+                                      {{ changePassForm.controls['password'].hasError('required') || changePassForm.controls['password'].hasError('hasCapitalCase') ? 'cancel' : 'check_circle' }}
+                                    </i> Must contain at least 1 in Capital Case!
+                                  </label>
+                                  
+                                  <label class="col" [ngClass]="changePassForm.controls['password'].hasError('required') || changePassForm.controls['password'].hasError('hasSmallCase')  ? 'text-danger' : 'text-success'">
+                                   <i class="material-icons">
+                                     {{ changePassForm.controls['password'].hasError('required') || changePassForm.controls['password'].hasError('hasSmallCase') ? 'cancel' : 'check_circle' }}
+                                   </i> 
+                                   Must contain at least 1 Letter in Small Case!
+                                  </label>
+                                  
+                                  <label class="col" [ngClass]="changePassForm.controls['password'].hasError('required') || changePassForm.controls['password'].hasError('hasSpecialCharacters') ? 'text-danger' : 'text-success'">
+                                    <i class="material-icons">
+                                     {{ changePassForm.controls['password'].hasError('required') || changePassForm.controls['password'].hasError('hasSpecialCharacters') ? 'cancel' : 'check_circle' }}
+                                    </i> 
+                                    Must contain at least 1 Special Character!
+                                  </label>
+                              </div>
+                              
+                            </div>
+                       
+                          <div class="form-group mb-0 text-center">
+                              <button  class="btn btn-success btn-block" type="button" (click)="onSubmit(fp);"> Update </button>
+                          </div>
+                          <div class="alert alert-success" *ngIf="passwordChanged">Password updated successfully.</div>
+
+                      </form>
+                    </div> <!-- end card-box -->
+
+
+                </div> <!-- end col-->
+
+                <div class="col-lg-8 col-xl-8">
+                    <div class="card-box">
+                        <ul class="nav nav-pills navtab-bg nav-justified">
+                           
+                            
+                            <li class="nav-item">
+                                <a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link active">
+                                    Update Details
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            
+                            <!-- end about me section content -->
+
+
+                            <div class="tab-pane active" id="settings">
+                                <form #fm="ngForm" enctype="multipart/form-data" (ngSubmit)="onUpdate(fm)" [formGroup]="profileData">
+                                    <h5 class="mb-4 text-uppercase"><i class="mdi mdi-account-circle mr-1"></i> Profile Info</h5>
+                                   
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="name">Name</label>
+                                                <input [(ngModel)]="nameFm" required  type="text" class="form-control" id="name" name="name" formControlName="name" [ngClass]="{'is-invalid' : submitted && c.name.errors}" placeholder="Enter first name">
+                                                <div *ngIf="submitted && c.name.errors" class="invalid-feedback">
+                                                    <div *ngIf="c.name.errors.required">Please provide name</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                          <div class="form-group">
+                                              <label for="email">Email Address</label>
+                                              <input [(ngModel)]="emailFm" type="email" class="form-control" id="email" name="email" formControlName="email" [ngClass]="{'is-invalid' : submitted && c.email.errors}" placeholder="Enter email">
+                                              <div *ngIf="submitted && c.email.errors" class="invalid-feedback">
+                                                  <div *ngIf="c.email.errors.required">Please enter address</div>
+                                                  <div *ngIf="c.email.errors.email">Please enter valid email address</div>
+                                                  <!-- <div *ngIf="f.lat.errors.required || f.lng.errors.required">Please select address from options</div> -->
+                                              </div>
+                                          </div>
+                                      </div>
+                                        
+                                    </div> <!-- end row -->
+
+                                    <div class="row">
+                                       
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="contact">Contact Number</label>
+                                                <input [(ngModel)]="contactFm" type="text" class="form-control" name="contact" formControlName="contact" [ngClass]="{'is-invalid' : submitted && c.contact.errors}" id="contact" placeholder="Enter Contact Number">
+                                                <div *ngIf="submitted && c.contact.errors" class="invalid-feedback">
+                                                    <div *ngIf="c.contact.errors.required">Please enter address</div>
+                                                    <div *ngIf="c.contact.errors.pattern">Please enter valid contact number</div>
+                                                </div>
+                                            </div>
+                                        </div> <!-- end col -->
+                                    </div> <!-- end row -->
+
+
+                                    <div class="text-right">
+                                        <button type="submit" class="btn btn-success waves-effect waves-light mt-2" (click)="onUpdate(fm);"><i class="mdi mdi-content-save"></i> Save</button>
+                                    </div>
+                                </form>
+                                <div class="alert alert-success" *ngIf="profileUpdated">Data updated successfully.</div>
+                            </div>
+                            <!-- end settings content-->
+
+                        </div> <!-- end tab-content -->
+                    </div> <!-- end card-box-->
+
+                </div> <!-- end col -->
+            </div>
+            <!-- end row-->
+
+        </div> <!-- container -->
+
+    </div> <!-- content -->
+
+    <!-- Footer Start -->
+    <app-footer></app-footer>
+    <!-- end Footer -->
+
+</div>
+
+<!-- ============================================================== -->
+<!-- End Page content -->
+<!-- ============================================================== -->
+
+
+</div>

@@ -1,0 +1,198 @@
+<div id="wrapper">
+    <!-- Topbar Start -->
+    <app-header></app-header>
+  
+    <!-- ========== Left Sidebar Start ========== -->
+    <app-sidebar></app-sidebar>
+    <!-- Left Sidebar End -->
+  <div class="content-page">
+      <div class="content">
+  
+          <!-- Start Content-->
+          <div class="container-fluid">
+  
+              <!-- start page title -->
+              <div class="row">
+                  <div class="col-12">
+                      <div class="page-title-box">
+                          <div class="page-title-right">
+                              <ol class="breadcrumb m-0">
+                                  <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                                  <li class="breadcrumb-item"><a routerLink="/centres">Instructor</a></li>
+                                  <li class="breadcrumb-item active">{{data.name}}</li>
+                              </ol>
+                          </div>
+                          <h4 class="page-title">Instructor Profile</h4>
+                      </div>
+                  </div>
+              </div>
+              <!-- end page title -->
+  
+              <div class="row">
+                  <div class="col-lg-4 col-xl-4">
+                      <div class="card-box text-center">
+                          <form enctype="multipart/form-data" #fm="ngForm"  (ngSubmit)="submitPicForm();">
+                                  <div class="avatar-upload">
+                                          <div class="avatar-edit">
+                                              <input  type='file' ngModel name="avatar" id="imageUpload" accept=".png, .jpg, .jpeg" (change)="fileEvent($event)" />
+                                              
+                                              <label for="imageUpload"></label>
+                                          </div>
+                                          
+                                          <div class="avatar-preview">
+                                              <div id="imagePreview" [style.background-image]="getBackground(data.avatar)" >
+                                              </div>
+                                          </div>
+                                          <input type="hidden" [(ngModel)]="profilePic" name="imageInput" id="imageInput">
+                                      </div>
+                                      <br>
+                              <button type="submit" class="btn btn-success btn-xs waves-effect mb-2 waves-light" *ngIf="submitPic" >Update</button>
+                          </form>
+                          <br>
+                          <div class="alert alert-success" *ngIf="successPic">Image Updated successfully</div>
+                          <h4 class="mb-0">{{data.name}}</h4>
+                          <!-- <p class="text-muted">{{}}</p> -->
+                          <!-- <button type="button" class="btn btn-success btn-xs waves-effect mb-2 waves-light">Follow</button>
+                          <button type="button" class="btn btn-danger btn-xs waves-effect mb-2 waves-light">Message</button> -->
+  
+                          <div class="text-left mt-3">
+                              <h4 class="font-13 text-uppercase">About Me :</h4>
+                              <p class="text-muted font-13 mb-3">
+                                  {{data.about}}
+                              </p>
+                              <p class="text-muted mb-2 font-13"><strong>Email :</strong> <span class="ml-2">{{data.email}}</span></p>
+  
+                              <p class="text-muted mb-2 font-13"><strong>Mobile :</strong><span class="ml-2">{{data.phone}}</span></p>
+  
+                              <p class="text-muted mb-1 font-13"><strong>Address :</strong> <span class="ml-2">{{data.address}}</span></p>
+
+                              <p class="text-muted mb-1 font-13"><strong>Age :</strong> <span class="ml-2">{{data.age}}</span></p>
+                          </div>
+  
+                          <button (click)="deleteMember()" type="button" class="btn btn-warning waves-effect waves-light mt-2"><i class="mdi mdi-content-trash"></i> Delete</button>
+                      </div> <!-- end card-box -->
+  
+  
+                  </div> <!-- end col-->
+  
+                  <div class="col-lg-8 col-xl-8">
+                      <div class="card-box">
+                          <ul class="nav nav-pills navtab-bg nav-justified">
+                             
+                              
+                              <li class="nav-item">
+                                  <a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link active">
+                                      Update Details
+                                  </a>
+                              </li>
+                          </ul>
+                          <div class="tab-content">
+                              
+                              <!-- end about me section content -->
+  
+  
+                              <div class="tab-pane active" id="settings">
+                                  <form #fm="ngForm" enctype="multipart/form-data" (ngSubmit)="onSubmit(fm)" [formGroup]="memberData">
+                                      <h5 class="mb-4 text-uppercase"><i class="mdi mdi-account-circle mr-1"></i> Centre Info</h5>
+                                     
+                                      <div class="row">
+                                          <div class="col-md-6">
+                                              <div class="form-group">
+                                                  <label for="name">Name</label>
+                                                  <input [(ngModel)]="name1" required  type="text" class="form-control" id="name" name="name" formControlName="name" [ngClass]="{'is-invalid' : submitted && f.name.errors}" placeholder="Enter first name">
+                                                  <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                                                      <div *ngIf="f.name.errors.required">Please provide centre name</div>
+                                                  </div>
+                                              </div>
+                                          </div>
+
+                                          <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="age">Age</label>
+                                                    <input [(ngModel)]="age1" required  type="number" class="form-control" id="age" name="age" formControlName="age" [ngClass]="{'is-invalid' : submitted && f.age.errors}" placeholder="Enter age">
+                                                    <div *ngIf="submitted && f.age.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.age.errors.required">Please provide age</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                          
+                                      </div> <!-- end row -->
+  
+                                      <div class="row">
+                                          <div class="col-md-6">
+                                              <div class="form-group">
+                                                  <label for="email">Email Address</label>
+                                                  <input [(ngModel)]="email1" type="email" class="form-control" id="email" name="email" formControlName="email" [ngClass]="{'is-invalid' : submitted && f.email.errors}" placeholder="Enter email">
+                                                  <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                                      <div *ngIf="f.email.errors.required">Please enter address</div>
+                                                      <div *ngIf="f.email.errors.email">Please enter valid email address</div>
+                                                      <!-- <div *ngIf="f.lat.errors.required || f.lng.errors.required">Please select address from options</div> -->
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="col-md-6">
+                                              <div class="form-group">
+                                                  <label for="contact">Contact Number</label>
+                                                  <input [(ngModel)]="contact1" type="text" class="form-control" name="contact" formControlName="contact" [ngClass]="{'is-invalid' : submitted && f.contact.errors}" id="contact" placeholder="Enter Contact Number">
+                                                  <div *ngIf="submitted && f.contact.errors" class="invalid-feedback">
+                                                      <div *ngIf="f.contact.errors.required">Please enter address</div>
+                                                      <div *ngIf="f.contact.errors.pattern">Please enter valid contact number</div>
+                                                  </div>
+                                              </div>
+                                          </div> <!-- end col -->
+                                      </div> <!-- end row -->
+  
+                                      <div class="row">
+                                          <div class="col-md-12">
+                                              <div class="form-group">
+                                                  <label for="about">About </label>
+                                                  <textarea [(ngModel)]="about1" name="about" id="about" class="form-control" formControlName="about" [ngClass]="{'is-invalid' : submitted && f.about.errors}"></textarea>
+                                                  <div *ngIf="submitted && f.about.errors" class="invalid-feedback">
+                                                      <div *ngIf="f.about.errors.required">Please enter about</div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div> <!-- end row -->
+
+                                      <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="about">Address </label>
+                                                    <textarea [(ngModel)]="address1" name="address" id="address" class="form-control" formControlName="address" [ngClass]="{'is-invalid' : submitted && f.address.errors}"></textarea>
+                                                    <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.address.errors.required">Please enter address</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> <!-- end row -->
+                                      <div class="text-right">
+                                          <button type="submit" class="btn btn-success waves-effect waves-light mt-2" [disabled]="SubmitButton"><i class="mdi mdi-content-save"></i> Save</button>
+                                      </div>
+                                  </form>
+                                  <div class="alert alert-success" *ngIf="success">Data updated successfully.</div>
+                              </div>
+                              <!-- end settings content-->
+  
+                          </div> <!-- end tab-content -->
+                      </div> <!-- end card-box-->
+  
+                  </div> <!-- end col -->
+              </div>
+              <!-- end row-->
+  
+          </div> <!-- container -->
+  
+      </div> <!-- content -->
+  
+      <!-- Footer Start -->
+      <app-footer></app-footer>
+      <!-- end Footer -->
+  
+  </div>
+  
+  <!-- ============================================================== -->
+  <!-- End Page content -->
+  <!-- ============================================================== -->
+  
+  
+  </div>

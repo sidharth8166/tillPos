@@ -1,0 +1,14 @@
+.material-icons {
+    display: inline-flex;
+    vertical-align: middle;
+  }
+
+  .text-danger {
+    color: #f1556c!important;
+    font-size: 12px;
+}
+
+.text-success {
+    color: #1abc9c!important;
+    font-size: 12px;
+}
